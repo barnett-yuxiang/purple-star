@@ -22,25 +22,27 @@
       <label>Background:</label>
       <select id="bgType">
         <option value="solid">Solid Color</option>
-        <option value="gradient">Gradient</option>
+        <option value="gradient" selected>Gradient</option>
       </select>
     </div>
 
-    <div id="solidColorControls" class="control-group">
-      <label for="bgColor">Color:</label>
-      <input type="color" id="bgColor" value="#ffffff">
-    </div>
+    <div class="control-group background-controls-wrapper">
+      <div id="solidColorControls" class="control-group hidden">
+        <label for="bgColor">Color:</label>
+        <input type="color" id="bgColor" value="#ffffff">
+      </div>
 
-    <div id="gradientControls" class="control-group" style="display: none;">
-      <label for="gradientStart">Start Color:</label>
-      <input type="color" id="gradientStart" value="#ffffff">
-      <label for="gradientEnd">End Color:</label>
-      <input type="color" id="gradientEnd" value="#e0e0e0">
-      <select id="gradientDirection">
-        <option value="horizontal">Horizontal</option>
-        <option value="vertical">Vertical</option>
-        <option value="diagonal">Diagonal</option>
-      </select>
+      <div id="gradientControls" class="control-group">
+        <label for="gradientStart">Start Color:</label>
+        <input type="color" id="gradientStart" value="#ffffff">
+        <label for="gradientEnd">End Color:</label>
+        <input type="color" id="gradientEnd" value="#e0e0e0">
+        <select id="gradientDirection">
+          <option value="horizontal">Horizontal</option>
+          <option value="vertical">Vertical</option>
+          <option value="diagonal">Diagonal</option>
+        </select>
+      </div>
     </div>
 
     <button id="saveBtn" class="hidden">Save Image</button>

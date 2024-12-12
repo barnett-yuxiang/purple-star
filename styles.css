@@ -83,6 +83,49 @@ body {
   align-items: center;
   gap: 10px;
   margin: 5px 0;
+  min-height: 30px;
+  position: relative;
+}
+
+.control-group.background-controls-wrapper {
+  position: relative;
+  min-height: 100px;  /* 设置足够的高度容纳所有控件 */
+}
+
+#solidColorControls,
+#gradientControls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+#solidColorControls.hidden,
+#gradientControls.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#gradientControls {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#gradientControls label {
+  min-width: 80px;
+}
+
+#gradientControls input[type="color"] {
+  width: 50px;
+  margin-right: 10px;
+}
+
+#gradientControls select {
+  margin-top: 5px;
+  width: 100%;
 }
 
 label {
@@ -138,7 +181,7 @@ select {
   transition: background .3s;
 }
 
-.slider::-webkit-slider-thumb:hover {
+slider::-webkit-slider-thumb:hover {
   background: #45a049;
 }
 

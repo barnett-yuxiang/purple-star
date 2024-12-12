@@ -209,11 +209,8 @@ document.getElementById('captureBtn').addEventListener('click', () => {
 
 document.getElementById('bgType').addEventListener('change', (e) => {
   const isSolid = e.target.value === 'solid';
-  document.getElementById('solidColorControls').style.display = 
-    isSolid ? 'block' : 'none';
-  document.getElementById('gradientControls').style.display = 
-    isSolid ? 'none' : 'block';
-  updatePreview();
+  document.getElementById('solidColorControls').classList.toggle('hidden', !isSolid);
+  document.getElementById('gradientControls').classList.toggle('hidden', isSolid);
 });
 
 // Add event listeners for all controls

@@ -91,7 +91,7 @@ body {
 
 .control-group.background-controls-wrapper {
   position: relative;
-  min-height: 100px;  /* 设置足够的高度容纳所有控件 */
+  min-height: 100px;  /* Set enough height to accommodate all controls */
 }
 
 #solidColorControls,

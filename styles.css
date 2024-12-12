@@ -2,6 +2,7 @@ body {
   width: 350px;
   padding: 15px;
   font-family: Arial, sans-serif;
+  background: #f5f5f5;
 }
 
 .container {
@@ -26,16 +27,45 @@ body {
   background-color: #45a049;
 }
 
+.preview-wrapper {
+  width: 100%;
+  height: 400px;
+  margin: 15px 0;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 #previewContainer {
-  margin: 10px 0;
-  max-height: 300px;
+  width: 100%;
+  height: 100%;
   overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#previewContainer::before {
+  content: 'Click "Capture Screen" to start';
+  position: absolute;
+  color: #999;
+  font-size: 14px;
 }
 
 #previewCanvas {
-  max-width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  display: none; /* Initially hidden */
+}
+
+/* Show canvas when it has content */
+#previewCanvas.has-content {
+  display: block;
 }
 
 .control-group {
@@ -76,4 +106,35 @@ select {
 
 #saveBtn:hover {
   background-color: #1976D2;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 150px;
+  height: 5px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  transition: background .3s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #45a049;
+}
+
+#paddingValue {
+  min-width: 60px;
+  display: inline-block;
+  text-align: right;
+  margin-left: 10px;
 }

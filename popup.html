@@ -7,14 +7,17 @@
 <body>
   <div class="container">
     <button id="captureBtn">📸 Capture Screen</button>
-    <div id="previewContainer">
-      <canvas id="previewCanvas"></canvas>
+    <div class="preview-wrapper">
+      <div id="previewContainer">
+        <canvas id="previewCanvas"></canvas>
+      </div>
     </div>
     <div class="control-group">
       <label for="padding">Padding:</label>
-      <input type="number" id="padding" value="20" min="0" max="100">
+      <input type="range" id="padding" min="0" max="200" value="40" class="slider">
+      <span id="paddingValue">40px</span>
     </div>
-    
+
     <div class="control-group">
       <label>Background:</label>
       <select id="bgType">

@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Enhanced Screenshot",
+    "version": "1.0",
+    "description": "增强的浏览器截屏工具",
+    "permissions": [
+        "activeTab",
+        "downloads"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "icons/icon128.png"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "128": "icons/icon128.png"
+    }
+}

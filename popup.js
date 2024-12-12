@@ -219,11 +219,14 @@ document.querySelectorAll('input[name="gradientPreset"]').forEach(input => {
 document.getElementById('saveBtn').addEventListener('click', () => {
   const canvas = document.getElementById('previewCanvas');
   canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
     const filename = `screenshot_${new Date().toISOString().replace(/:/g, '-')}.png`;
     chrome.downloads.download({
-      url: URL.createObjectURL(blob),
+      url: url,
       filename: filename,
       saveAs: false
+    }, () => {
+      URL.revokeObjectURL(url); // Clean up the object URL
     });
   });
 });

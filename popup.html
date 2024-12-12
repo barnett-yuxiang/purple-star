@@ -6,7 +6,41 @@
 </head>
 <body>
   <div class="container">
-    <button id="captureBtn">📸 截取屏幕</button>
+    <button id="captureBtn">📸 Capture Screen</button>
+    <div id="previewContainer">
+      <canvas id="previewCanvas"></canvas>
+    </div>
+    <div class="control-group">
+      <label for="padding">Padding:</label>
+      <input type="number" id="padding" value="20" min="0" max="100">
+    </div>
+    
+    <div class="control-group">
+      <label>Background:</label>
+      <select id="bgType">
+        <option value="solid">Solid Color</option>
+        <option value="gradient">Gradient</option>
+      </select>
+    </div>
+
+    <div id="solidColorControls" class="control-group">
+      <label for="bgColor">Color:</label>
+      <input type="color" id="bgColor" value="#ffffff">
+    </div>
+
+    <div id="gradientControls" class="control-group" style="display: none;">
+      <label for="gradientStart">Start Color:</label>
+      <input type="color" id="gradientStart" value="#ffffff">
+      <label for="gradientEnd">End Color:</label>
+      <input type="color" id="gradientEnd" value="#e0e0e0">
+      <select id="gradientDirection">
+        <option value="horizontal">Horizontal</option>
+        <option value="vertical">Vertical</option>
+        <option value="diagonal">Diagonal</option>
+      </select>
+    </div>
+
+    <button id="saveBtn" class="hidden">Save Image</button>
   </div>
   <script src="popup.js"></script>
 </body>

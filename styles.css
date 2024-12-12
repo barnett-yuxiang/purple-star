@@ -1,7 +1,13 @@
 body {
-  width: 300px;
-  padding: 10px;
-  text-align: center;
+  width: 350px;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 #captureBtn {
@@ -10,10 +16,64 @@ body {
   border: none;
   padding: 10px 20px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+#captureBtn:hover {
+  background-color: #45a049;
+}
+
+#previewContainer {
+  margin: 10px 0;
+  max-height: 300px;
+  overflow: auto;
+}
+
+#previewCanvas {
+  max-width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+label {
+  min-width: 80px;
+  text-align: right;
+}
+
+input[type="number"],
+input[type="color"],
+select {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+#saveBtn {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+#saveBtn:hover {
+  background-color: #1976D2;
 }

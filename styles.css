@@ -29,7 +29,7 @@ body {
 
 .preview-wrapper {
   width: 100%;
-  height: 400px;
+  height: 320px;
   margin: 15px 0;
   background: #fff;
   border: 2px solid #ddd;
@@ -40,13 +40,16 @@ body {
 #previewContainer {
   width: 100%;
   height: 100%;
-  overflow: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f8f8f8;
   padding: 20px;
   box-sizing: border-box;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
 }
 
 #previewContainer::before {

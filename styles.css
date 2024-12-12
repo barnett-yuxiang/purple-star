@@ -39,9 +39,11 @@ body {
   height: 320px;
   margin: 15px 0;
   background: #fff;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 1px dashed #d0d0d0;
+  border-radius: 12px;
   overflow: hidden;
+  position: relative;
+  background-clip: padding-box;
 }
 
 #previewContainer {
@@ -50,7 +52,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f8f8;
+  background: #fafafa;
   padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
@@ -126,6 +128,35 @@ body {
 #gradientControls select {
   margin-top: 5px;
   width: 100%;
+}
+
+.gradient-presets {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.gradient-option {
+  cursor: pointer;
+}
+
+.gradient-option input[type="radio"] {
+  display: none;
+}
+
+.gradient-preview {
+  display: block;
+  width: 80px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.gradient-option input[type="radio"]:checked + .gradient-preview {
+  border-color: #666;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 label {

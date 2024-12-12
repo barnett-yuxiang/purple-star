@@ -1,31 +1,25 @@
+const gradientPresets = {
+  preset1: { start: '#FF6B6B', end: '#4ECDC4' },
+  preset2: { start: '#A8E6CF', end: '#FFD3B6' },
+  preset3: { start: '#3494E6', end: '#EC6EAD' },
+  preset4: { start: '#DAE2F8', end: '#D6A4A4' }
+};
+
 let capturedImage = null;
 
 function drawBackground(ctx, width, height) {
   const bgType = document.getElementById('bgType').value;
-  
+
   if (bgType === 'solid') {
     ctx.fillStyle = document.getElementById('bgColor').value;
     ctx.fillRect(0, 0, width, height);
   } else {
-    const startColor = document.getElementById('gradientStart').value;
-    const endColor = document.getElementById('gradientEnd').value;
-    const direction = document.getElementById('gradientDirection').value;
-    
-    let gradient;
-    switch (direction) {
-      case 'horizontal':
-        gradient = ctx.createLinearGradient(0, 0, width, 0);
-        break;
-      case 'vertical':
-        gradient = ctx.createLinearGradient(0, 0, 0, height);
-        break;
-      case 'diagonal':
-        gradient = ctx.createLinearGradient(0, 0, width, height);
-        break;
-    }
-    
-    gradient.addColorStop(0, startColor);
-    gradient.addColorStop(1, endColor);
+    const selectedPreset = document.querySelector('input[name="gradientPreset"]:checked').value;
+    const { start, end } = gradientPresets[selectedPreset];
+
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, start);
+    gradient.addColorStop(1, end);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
   }
@@ -37,30 +31,30 @@ function extractColors(img) {
   canvas.width = img.width;
   canvas.height = img.height;
   ctx.drawImage(img, 0, 0);
-  
+
   const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
   const colorCounts = {};
   const blockSize = 5;
-  
+
   // Sample colors from the image
   for (let i = 0; i < data.length; i += blockSize * 4) {
     const r = data[i];
     const g = data[i + 1];
     const b = data[i + 2];
-    
+
     // Skip whites and near-whites
     if (r > 250 && g > 250 && b > 250) continue;
     // Skip blacks and near-blacks
     if (r < 5 && g < 5 && b < 5) continue;
-    
+
     const rgb = `${r},${g},${b}`;
     colorCounts[rgb] = (colorCounts[rgb] || 0) + 1;
   }
-  
+
   const sortedColors = Object.entries(colorCounts)
     .sort((a, b) => b[1] - a[1])
     .map(([rgb]) => rgb.split(',').map(Number));
-  
+
   // If we don't have enough distinct colors, generate complementary colors
   if (sortedColors.length < 2) {
     const primary = sortedColors[0] || [100, 149, 237]; // Default cornflower blue
@@ -70,11 +64,11 @@ function extractColors(img) {
       secondary: rgbToHex(secondary)
     };
   }
-  
+
   // Find two colors with good contrast
   let primaryColor = sortedColors[0];
   let secondaryColor = null;
-  
+
   // Look for a second color with good contrast
   for (let i = 1; i < sortedColors.length; i++) {
     if (getColorContrast(primaryColor, sortedColors[i]) > 50) {
@@ -82,12 +76,12 @@ function extractColors(img) {
       break;
     }
   }
-  
+
   // If no good contrast found, generate complementary
   if (!secondaryColor) {
     secondaryColor = generateComplementaryColor(primaryColor);
   }
-  
+
   return {
     primary: rgbToHex(primaryColor),
     secondary: rgbToHex(secondaryColor)
@@ -95,8 +89,8 @@ function extractColors(img) {
 }
 
 function getColorContrast(rgb1, rgb2) {
-  return Math.abs(rgb1[0] - rgb2[0]) + 
-         Math.abs(rgb1[1] - rgb2[1]) + 
+  return Math.abs(rgb1[0] - rgb2[0]) +
+         Math.abs(rgb1[1] - rgb2[1]) +
          Math.abs(rgb1[2] - rgb2[2]);
 }
 
@@ -128,7 +122,7 @@ function applyRoundedCorners(ctx, x, y, width, height, radius) {
 function initializePreview() {
   const canvas = document.getElementById('previewCanvas');
   const ctx = canvas.getContext('2d');
-  
+
   // Set initial canvas size to match container
   const previewContainer = document.getElementById('previewContainer');
   canvas.width = previewContainer.clientWidth;
@@ -143,33 +137,33 @@ function updatePreview() {
   const ctx = canvas.getContext('2d');
   const padding = parseInt(document.getElementById('padding').value);
   document.getElementById('paddingValue').textContent = `${padding}px`;
-  
+
   // Calculate dimensions
   const containerWidth = previewContainer.clientWidth - 40;
   const containerHeight = previewContainer.clientHeight - 40;
-  
+
   let canvasWidth = capturedImage.width + padding * 2;
   let canvasHeight = capturedImage.height + padding * 2;
-  
+
   // Calculate scale to fit within container while maintaining aspect ratio
   const scaleX = containerWidth / canvasWidth;
   const scaleY = containerHeight / canvasHeight;
   const scale = Math.min(scaleX, scaleY, 1); // Don't scale up, only down if needed
-  
+
   // Set canvas dimensions
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
-  
+
   // Draw background
   drawBackground(ctx, canvas.width, canvas.height);
-  
+
   // Draw image with rounded corners
   ctx.save();
   applyRoundedCorners(ctx, padding, padding, capturedImage.width, capturedImage.height, 12);
   ctx.clip();
   ctx.drawImage(capturedImage, padding, padding);
   ctx.restore();
-  
+
   // Apply scale
   canvas.style.transform = `scale(${scale})`;
   canvas.style.transformOrigin = 'center';
@@ -184,24 +178,23 @@ document.getElementById('padding').addEventListener('input', function(e) {
 });
 
 document.getElementById('captureBtn').addEventListener('click', () => {
+  // 每次点击时显示保存按钮，以便多次截图
+  document.getElementById('saveBtn').classList.remove('hidden');
+
   chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
     const img = new Image();
     img.onload = function() {
       capturedImage = img;
-      const colors = extractColors(img);
-      
-      // Set gradient as default
-      document.getElementById('bgType').value = 'gradient';
-      document.getElementById('solidColorControls').style.display = 'none';
-      document.getElementById('gradientControls').style.display = 'block';
-      
-      // Set extracted colors
-      document.getElementById('gradientStart').value = colors.primary;
-      document.getElementById('gradientEnd').value = colors.secondary;
-      document.getElementById('bgColor').value = colors.primary;
-      
+
+      // Keep current background type selection
+      const currentBgType = document.getElementById('bgType').value;
+      const isSolid = currentBgType === 'solid';
+
+      // Update controls visibility based on current selection
+      document.getElementById('solidColorControls').classList.toggle('hidden', !isSolid);
+      document.getElementById('gradientControls').classList.toggle('hidden', isSolid);
+
       updatePreview();
-      document.getElementById('saveBtn').classList.remove('hidden');
     };
     img.src = dataUrl;
   });
@@ -211,13 +204,17 @@ document.getElementById('bgType').addEventListener('change', (e) => {
   const isSolid = e.target.value === 'solid';
   document.getElementById('solidColorControls').classList.toggle('hidden', !isSolid);
   document.getElementById('gradientControls').classList.toggle('hidden', isSolid);
+  updatePreview();
 });
 
-// Add event listeners for all controls
-['padding', 'bgColor', 'gradientStart', 'gradientEnd', 'gradientDirection']
-  .forEach(id => {
-    document.getElementById(id).addEventListener('change', updatePreview);
-  });
+// 简化事件监听器列表
+['padding', 'bgColor'].forEach(id => {
+  document.getElementById(id).addEventListener('change', updatePreview);
+});
+
+document.querySelectorAll('input[name="gradientPreset"]').forEach(input => {
+  input.addEventListener('change', updatePreview);
+});
 
 document.getElementById('saveBtn').addEventListener('click', () => {
   const canvas = document.getElementById('previewCanvas');

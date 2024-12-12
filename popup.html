@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <button id="captureBtn" aria-label="Capture Screen">📸 Capture Screen</button>
+    <button id="captureBtn" aria-label="Capture Screen">Capture Screen</button>
     <div class="preview-wrapper">
       <div id="previewContainer">
         <canvas id="previewCanvas"></canvas>
@@ -30,20 +30,29 @@
 
     <div class="control-group background-controls-wrapper">
       <div id="solidColorControls" class="control-group hidden">
-        <label for="bgColor">Color:</label>
+        <label for="bgColor">Background Color:</label>
         <input type="color" id="bgColor" value="#ffffff" aria-label="Background Color">
       </div>
 
       <div id="gradientControls" class="control-group">
-        <label for="gradientStart">Start Color:</label>
-        <input type="color" id="gradientStart" value="#ffffff" aria-label="Gradient Start Color">
-        <label for="gradientEnd">End Color:</label>
-        <input type="color" id="gradientEnd" value="#e0e0e0" aria-label="Gradient End Color">
-        <select id="gradientDirection" aria-label="Gradient Direction">
-          <option value="horizontal">Horizontal</option>
-          <option value="vertical">Vertical</option>
-          <option value="diagonal">Diagonal</option>
-        </select>
+        <div class="gradient-presets">
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset1" checked>
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4)"></span>
+          </label>
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset2">
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #A8E6CF, #FFD3B6)"></span>
+          </label>
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset3">
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #3494E6, #EC6EAD)"></span>
+          </label>
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset4">
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #DAE2F8, #D6A4A4)"></span>
+          </label>
+        </div>
       </div>
     </div>
 

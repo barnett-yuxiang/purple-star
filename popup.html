@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enhanced Screenshot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <button id="captureBtn">📸 Capture Screen</button>
+    <button id="captureBtn" aria-label="Capture Screen">📸 Capture Screen</button>
     <div class="preview-wrapper">
       <div id="previewContainer">
         <canvas id="previewCanvas"></canvas>
@@ -14,13 +16,13 @@
     </div>
     <div class="control-group">
       <label for="padding">Padding:</label>
-      <input type="range" id="padding" min="0" max="200" value="40" class="slider">
+      <input type="range" id="padding" min="0" max="200" value="40" class="slider" aria-label="Padding">
       <span id="paddingValue">40px</span>
     </div>
 
     <div class="control-group">
-      <label>Background:</label>
-      <select id="bgType">
+      <label for="bgType">Background:</label>
+      <select id="bgType" aria-label="Background Type">
         <option value="solid">Solid Color</option>
         <option value="gradient" selected>Gradient</option>
       </select>
@@ -29,15 +31,15 @@
     <div class="control-group background-controls-wrapper">
       <div id="solidColorControls" class="control-group hidden">
         <label for="bgColor">Color:</label>
-        <input type="color" id="bgColor" value="#ffffff">
+        <input type="color" id="bgColor" value="#ffffff" aria-label="Background Color">
       </div>
 
       <div id="gradientControls" class="control-group">
         <label for="gradientStart">Start Color:</label>
-        <input type="color" id="gradientStart" value="#ffffff">
+        <input type="color" id="gradientStart" value="#ffffff" aria-label="Gradient Start Color">
         <label for="gradientEnd">End Color:</label>
-        <input type="color" id="gradientEnd" value="#e0e0e0">
-        <select id="gradientDirection">
+        <input type="color" id="gradientEnd" value="#e0e0e0" aria-label="Gradient End Color">
+        <select id="gradientDirection" aria-label="Gradient Direction">
           <option value="horizontal">Horizontal</option>
           <option value="vertical">Vertical</option>
           <option value="diagonal">Diagonal</option>
@@ -45,7 +47,7 @@
       </div>
     </div>
 
-    <button id="saveBtn" class="hidden">Save Image</button>
+    <button id="saveBtn" class="hidden" aria-label="Save Image">Save Image</button>
   </div>
   <script src="popup.js"></script>
 </body>

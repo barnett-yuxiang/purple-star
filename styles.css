@@ -146,7 +146,7 @@ select {
 }
 
 #saveBtn {
-  background-color: #2196F3;
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -158,7 +158,7 @@ select {
 }
 
 #saveBtn:hover {
-  background-color: #1976D2;
+  background-color: var(--secondary-hover);
 }
 
 .slider {
@@ -176,13 +176,13 @@ select {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: var(--primary-color);
   cursor: pointer;
   transition: background .3s;
 }
 
-slider::-webkit-slider-thumb:hover {
-  background: #45a049;
+.slider::-webkit-slider-thumb:hover {
+  background: var(--primary-hover);
 }
 
 #paddingValue {

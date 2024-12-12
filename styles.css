@@ -1,3 +1,10 @@
+:root {
+  --primary-color: #4CAF50;
+  --primary-hover: #45a049;
+  --secondary-color: #2196F3;
+  --secondary-hover: #1976D2;
+}
+
 body {
   width: 350px;
   padding: 15px;
@@ -12,7 +19,7 @@ body {
 }
 
 #captureBtn {
-  background-color: #4CAF50;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -20,11 +27,11 @@ body {
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 }
 
 #captureBtn:hover {
-  background-color: #45a049;
+  background-color: var(--primary-hover);
 }
 
 .preview-wrapper {

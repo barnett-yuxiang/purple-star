@@ -1,7 +1,15 @@
+:root {
+  --primary-color: #4CAF50;
+  --primary-hover: #45a049;
+  --secondary-color: #2196F3;
+  --secondary-hover: #1976D2;
+}
+
 body {
   width: 350px;
   padding: 15px;
   font-family: Arial, sans-serif;
+  background: #f5f5f5;
 }
 
 .container {
@@ -11,7 +19,7 @@ body {
 }
 
 #captureBtn {
-  background-color: #4CAF50;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -19,23 +27,57 @@ body {
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 }
 
 #captureBtn:hover {
-  background-color: #45a049;
+  background-color: var(--primary-hover);
+}
+
+.preview-wrapper {
+  width: 100%;
+  height: 320px;
+  margin: 15px 0;
+  background: #fff;
+  border: 1px dashed #d0d0d0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background-clip: padding-box;
 }
 
 #previewContainer {
-  margin: 10px 0;
-  max-height: 300px;
-  overflow: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+#previewContainer::before {
+  content: 'Click "Capture Screen" to start';
+  position: absolute;
+  color: #999;
+  font-size: 14px;
 }
 
 #previewCanvas {
-  max-width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  display: none; /* Initially hidden */
+}
+
+/* Show canvas when it has content */
+#previewCanvas.has-content {
+  display: block;
 }
 
 .control-group {
@@ -43,6 +85,78 @@ body {
   align-items: center;
   gap: 10px;
   margin: 5px 0;
+  min-height: 30px;
+  position: relative;
+}
+
+.control-group.background-controls-wrapper {
+  position: relative;
+  min-height: 100px;  /* Set enough height to accommodate all controls */
+}
+
+#solidColorControls,
+#gradientControls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+#solidColorControls.hidden,
+#gradientControls.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#gradientControls {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#gradientControls label {
+  min-width: 80px;
+}
+
+#gradientControls input[type="color"] {
+  width: 50px;
+  margin-right: 10px;
+}
+
+#gradientControls select {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.gradient-presets {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.gradient-option {
+  cursor: pointer;
+}
+
+.gradient-option input[type="radio"] {
+  display: none;
+}
+
+.gradient-preview {
+  display: block;
+  width: 80px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.gradient-option input[type="radio"]:checked + .gradient-preview {
+  border-color: #666;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 label {
@@ -63,7 +177,7 @@ select {
 }
 
 #saveBtn {
-  background-color: #2196F3;
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -75,5 +189,36 @@ select {
 }
 
 #saveBtn:hover {
-  background-color: #1976D2;
+  background-color: var(--secondary-hover);
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 150px;
+  height: 5px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  transition: background .3s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: var(--primary-hover);
+}
+
+#paddingValue {
+  min-width: 60px;
+  display: inline-block;
+  text-align: right;
+  margin-left: 10px;
 }

@@ -1,46 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enhanced Screenshot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <button id="captureBtn">📸 Capture Screen</button>
-    <div id="previewContainer">
-      <canvas id="previewCanvas"></canvas>
+    <button id="captureBtn" aria-label="Capture Screen">Capture Screen</button>
+    <div class="preview-wrapper">
+      <div id="previewContainer">
+        <canvas id="previewCanvas"></canvas>
+      </div>
     </div>
     <div class="control-group">
       <label for="padding">Padding:</label>
-      <input type="number" id="padding" value="20" min="0" max="100">
+      <input type="range" id="padding" min="0" max="200" value="40" class="slider" aria-label="Padding">
+      <span id="paddingValue">40px</span>
     </div>
-    
+
     <div class="control-group">
-      <label>Background:</label>
-      <select id="bgType">
+      <label for="bgType">Background:</label>
+      <select id="bgType" aria-label="Background Type">
         <option value="solid">Solid Color</option>
-        <option value="gradient">Gradient</option>
+        <option value="gradient" selected>Gradient</option>
       </select>
     </div>
 
-    <div id="solidColorControls" class="control-group">
-      <label for="bgColor">Color:</label>
-      <input type="color" id="bgColor" value="#ffffff">
+    <div class="control-group background-controls-wrapper">
+      <div id="solidColorControls" class="control-group hidden">
+        <label for="bgColor">Background Color:</label>
+        <input type="color" id="bgColor" value="#ffffff" aria-label="Background Color">
+      </div>
+
+      <div id="gradientControls" class="control-group">
+        <div class="gradient-presets">
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset1" checked>
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4)"></span>
+          </label>
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset2">
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #A8E6CF, #FFD3B6)"></span>
+          </label>
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset3">
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #3494E6, #EC6EAD)"></span>
+          </label>
+          <label class="gradient-option">
+            <input type="radio" name="gradientPreset" value="preset4">
+            <span class="gradient-preview" style="background: linear-gradient(45deg, #DAE2F8, #D6A4A4)"></span>
+          </label>
+        </div>
+      </div>
     </div>
 
-    <div id="gradientControls" class="control-group" style="display: none;">
-      <label for="gradientStart">Start Color:</label>
-      <input type="color" id="gradientStart" value="#ffffff">
-      <label for="gradientEnd">End Color:</label>
-      <input type="color" id="gradientEnd" value="#e0e0e0">
-      <select id="gradientDirection">
-        <option value="horizontal">Horizontal</option>
-        <option value="vertical">Vertical</option>
-        <option value="diagonal">Diagonal</option>
-      </select>
-    </div>
-
-    <button id="saveBtn" class="hidden">Save Image</button>
+    <button id="saveBtn" class="hidden" aria-label="Save Image">Save Image</button>
   </div>
   <script src="popup.js"></script>
 </body>

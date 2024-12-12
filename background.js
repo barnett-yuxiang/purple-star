@@ -1,16 +1,16 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "saveScreenshot") {
-    // 创建圆角矩形画布
+    // Create rounded rectangle canvas
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       
-      // 设置画布大小与图片相同
+      // Set canvas size to match the image
       canvas.width = img.width;
       canvas.height = img.height;
       
-      // 绘制圆角矩形
+      // Draw rounded rectangle
       ctx.beginPath();
       const cornerRadius = 20;
       ctx.moveTo(cornerRadius, 0);
@@ -20,10 +20,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       ctx.arcTo(0, 0, canvas.width, 0, cornerRadius);
       ctx.clip();
       
-      // 绘制图片
+      // Draw image
       ctx.drawImage(img, 0, 0);
       
-      // 转换为 Blob
+      // Convert to Blob
       canvas.toBlob((blob) => {
         const filename = `screenshot_${new Date().toISOString().replace(/:/g, '-')}.png`;
         const downloadOptions = {

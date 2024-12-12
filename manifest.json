@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Enhanced Screenshot",
     "version": "1.0",
-    "description": "增强的浏览器截屏工具",
+    "description": "Enhanced browser screenshot tool",
     "permissions": [
         "activeTab",
         "downloads"

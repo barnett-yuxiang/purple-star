@@ -178,7 +178,7 @@ document.getElementById('padding').addEventListener('input', function(e) {
 });
 
 document.getElementById('captureBtn').addEventListener('click', () => {
-  // 每次点击时显示保存按钮，以便多次截图
+  // Show save button on each click to allow multiple captures
   document.getElementById('saveBtn').classList.remove('hidden');
 
   chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
@@ -207,7 +207,7 @@ document.getElementById('bgType').addEventListener('change', (e) => {
   updatePreview();
 });
 
-// 简化事件监听器列表
+// Simplify event listener list
 ['padding', 'bgColor'].forEach(id => {
   document.getElementById(id).addEventListener('change', updatePreview);
 });

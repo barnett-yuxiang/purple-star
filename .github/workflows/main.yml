@@ -1,1 +1,27 @@
+name: Build Enhanced Screenshot ZIP
 
+# Manual trigger
+on:
+  workflow_dispatch:
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Create ZIP file
+      - name: Create ZIP file
+        run: |
+          mkdir -p build
+          zip -r build/enhanced-screenshot.zip . -x ".git*" -x "build/*" -x ".github/*" -x "*.yml"
+
+      # Save ZIP file to Actions Artifact (for direct download)
+      - name: Upload ZIP as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: enhanced-screenshot
+          path: build/enhanced-screenshot.zip

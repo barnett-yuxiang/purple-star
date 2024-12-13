@@ -16,12 +16,11 @@ jobs:
       # Create ZIP file
       - name: Create ZIP file
         run: |
-          mkdir -p build
-          zip -r build/enhanced-screenshot.zip . -x ".git*" -x "build/*" -x ".github/*" -x "*.yml"
+          zip -r enhanced-screenshot.zip . -x ".git*" -x ".github/*" -x "*.yml" -x "*.md" -x ".DS_Store" -x "node_modules/*" -x "*.gitignore" -x "publish/*"
 
       # Save ZIP file to Actions Artifact (for direct download)
       - name: Upload ZIP as artifact
         uses: actions/upload-artifact@v3
         with:
           name: enhanced-screenshot
-          path: build/enhanced-screenshot.zip
+          path: enhanced-screenshot.zip

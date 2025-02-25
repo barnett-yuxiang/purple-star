@@ -8,7 +8,10 @@
 </head>
 <body>
   <div class="container">
-    <button id="captureBtn" aria-label="Capture Screen">Capture Screen</button>
+    <div class="capture-buttons">
+      <button id="captureBtn" aria-label="Capture Screen">Capture Screen</button>
+      <button id="selectAreaBtn" aria-label="Select Area">Select Area</button>
+    </div>
     <div class="preview-wrapper">
       <div id="previewContainer">
         <canvas id="previewCanvas"></canvas>
@@ -57,6 +60,9 @@
     </div>
 
     <button id="saveBtn" class="hidden" aria-label="Save Image">Save Image</button>
+  </div>
+  <div id="empty-state" class="empty-state hidden">
+    <p>No screenshot available. Capture a new one!</p>
   </div>
   <script src="popup.js"></script>
 </body>

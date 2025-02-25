@@ -177,31 +177,134 @@ document.getElementById('padding').addEventListener('input', function(e) {
   updatePreview();
 });
 
-document.getElementById('captureBtn').addEventListener('click', () => {
-  // Show save button on each click to allow multiple captures
-  document.getElementById('saveBtn').classList.remove('hidden');
+document.addEventListener('DOMContentLoaded', function() {
+  initializePreview();
 
-  chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
-    if (chrome.runtime.lastError) {
-      console.error("Screenshot capture failed:", chrome.runtime.lastError);
-      return;
+  // 从背景脚本获取可能存在的区域截图
+  chrome.runtime.sendMessage({action: "getAreaScreenshot"}, function(response) {
+    if (response && response.imageData) {
+      console.log("Received area screenshot in popup");
+      // 创建图像对象
+      const img = new Image();
+      img.onload = function() {
+        console.log("Area screenshot loaded, dimensions:", img.width, "x", img.height);
+        capturedImage = img;
+        updatePreview();
+
+        // 显示保存按钮
+        document.getElementById('saveBtn').classList.remove('hidden');
+
+        // 隐藏空状态提示
+        const emptyState = document.getElementById('empty-state');
+        if (emptyState) {
+          emptyState.classList.add('hidden');
+        }
+      };
+      img.src = response.imageData;
+    } else {
+      // 显示空状态提示
+      const emptyState = document.getElementById('empty-state');
+      if (emptyState) {
+        emptyState.classList.remove('hidden');
+      }
     }
+  });
 
-    const img = new Image();
-    img.onload = function() {
-      capturedImage = img;
+  // 获取预览区域
+  const previewContainer = document.getElementById('previewContainer');
 
-      // Keep current background type selection
-      const currentBgType = document.getElementById('bgType').value;
-      const isSolid = currentBgType === 'solid';
+  // 确保元素存在
+  if (previewContainer) {
+    // 添加删除按钮
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-button';
+    deleteButton.innerHTML = '🗑️';
+    deleteButton.title = 'Delete screenshot';
+    deleteButton.classList.add('delete-button');
 
-      // Update controls visibility based on current selection
-      document.getElementById('solidColorControls').classList.toggle('hidden', !isSolid);
-      document.getElementById('gradientControls').classList.toggle('hidden', isSolid);
+    // 将删除按钮添加到预览容器
+    previewContainer.appendChild(deleteButton);
 
-      updatePreview();
-    };
-    img.src = dataUrl;
+    // 添加删除按钮的点击事件
+    deleteButton.addEventListener('click', function() {
+      // 发送消息到background脚本，清除保存的截图
+      chrome.runtime.sendMessage({
+        action: "clearScreenshot"
+      }, function() {
+        // 清除预览图像
+        const previewCanvas = document.getElementById('previewCanvas');
+        if (previewCanvas) {
+          const ctx = previewCanvas.getContext('2d');
+          ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          previewCanvas.classList.remove('has-content');
+        }
+
+        // 隐藏保存按钮
+        document.getElementById('saveBtn').classList.add('hidden');
+
+        // 显示空状态提示
+        const emptyState = document.getElementById('empty-state');
+        if (emptyState) {
+          emptyState.classList.remove('hidden');
+        }
+
+        // 重置全局变量
+        capturedImage = null;
+      });
+    });
+  }
+
+  // 获取按钮元素
+  const captureBtn = document.getElementById('captureBtn');
+  const selectAreaBtn = document.getElementById('selectAreaBtn');
+
+  // 截取整个屏幕
+  captureBtn.addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      if (tabs.length === 0) return;
+
+      const activeTab = tabs[0];
+
+      // 关闭popup
+      window.close();
+
+      // 延迟一下，确保popup完全关闭
+      setTimeout(() => {
+        // 直接截取整个可见区域
+        chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
+          if (chrome.runtime.lastError) {
+            console.error("Screenshot capture failed:", chrome.runtime.lastError);
+            return;
+          }
+
+          // 关键修改：保存截图数据到background.js中的capturedAreaImage变量
+          chrome.runtime.sendMessage({
+            action: "areaSelected",
+            imageData: dataUrl
+          });
+        });
+      }, 100);
+    });
+  });
+
+  // 选择区域
+  selectAreaBtn.addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      if (tabs.length === 0) return;
+
+      const activeTab = tabs[0];
+
+      // 关闭popup
+      window.close();
+
+      // 注入内容脚本
+      chrome.scripting.executeScript({
+        target: {tabId: activeTab.id},
+        files: ['content-selector.js']
+      }).catch(err => {
+        console.error("Script injection failed:", err);
+      });
+    });
   });
 });
 
@@ -282,12 +385,3 @@ function hslToRgb(h, s, l) {
 
   return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  initializePreview();
-
-  // Set initial visibility of controls based on selected background type
-  const isSolid = document.getElementById('bgType').value === 'solid';
-  document.getElementById('solidColorControls').classList.toggle('hidden', !isSolid);
-  document.getElementById('gradientControls').classList.toggle('hidden', isSolid);
-});

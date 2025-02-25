@@ -258,33 +258,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const captureBtn = document.getElementById('captureBtn');
   const selectAreaBtn = document.getElementById('selectAreaBtn');
 
-  // 截取整个屏幕
+  // 截取整个屏幕 - 修复版本
   captureBtn.addEventListener('click', function() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      if (tabs.length === 0) return;
-
-      const activeTab = tabs[0];
-
-      // 关闭popup
-      window.close();
-
-      // 延迟一下，确保popup完全关闭
-      setTimeout(() => {
-        // 直接截取整个可见区域
-        chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
-          if (chrome.runtime.lastError) {
-            console.error("Screenshot capture failed:", chrome.runtime.lastError);
-            return;
-          }
-
-          // 关键修改：保存截图数据到background.js中的capturedAreaImage变量
-          chrome.runtime.sendMessage({
-            action: "areaSelected",
-            imageData: dataUrl
-          });
-        });
-      }, 100);
+    // 发送消息到background脚本，让它处理截图
+    // 这样即使popup关闭，background也能继续执行
+    chrome.runtime.sendMessage({
+      action: "captureEntireScreen"
     });
+
+    // 关闭popup
+    window.close();
   });
 
   // 选择区域

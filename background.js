@@ -143,6 +143,40 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({status: "cleared"});
     return true;
   }
+
+  // 处理整个屏幕截图请求
+  if (request.action === "captureEntireScreen") {
+    // 延迟执行截图，确保popup完全关闭
+    setTimeout(() => {
+      chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
+        if (chrome.runtime.lastError) {
+          console.error("Screenshot capture failed:", chrome.runtime.lastError);
+          return;
+        }
+
+        console.log("Full screenshot captured successfully");
+
+        // 保存截图数据
+        capturedAreaImage = dataUrl;
+
+        // 尝试打开popup
+        try {
+          chrome.action.openPopup();
+        } catch (e) {
+          console.log("无法自动打开popup，用户需要手动点击扩展图标");
+          // 显示通知提醒用户
+          chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icons/icon128.png',
+            title: '截图已完成',
+            message: '点击扩展图标查看并编辑您的截图'
+          });
+        }
+      });
+    }, 300); // 增加延迟时间，确保popup完全关闭
+
+    return true;
+  }
 });
 
 // 监听来自离屏文档的消息

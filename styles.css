@@ -15,7 +15,8 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  padding: 5px;
 }
 
 .capture-buttons {
@@ -56,11 +57,13 @@ body {
   height: 280px;
   margin: 10px 0;
   background: #fff;
-  border: 1px dashed #d0d0d0;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
-  background-clip: padding-box;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #previewContainer {
@@ -70,12 +73,12 @@ body {
   align-items: center;
   justify-content: center;
   background: #fafafa;
-  padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
   -webkit-user-select: none;
   user-select: none;
   touch-action: none;
+  position: relative;
 }
 
 #previewContainer::before {
@@ -86,15 +89,17 @@ body {
 }
 
 #previewCanvas {
-  max-width: none;
-  max-height: none;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   display: none; /* Initially hidden */
+  margin: 0 auto; /* 确保水平居中 */
 }
 
-/* Show canvas when it has content */
+/* 确保canvas居中显示 */
 #previewCanvas.has-content {
   display: block;
+  margin: 0 auto;
 }
 
 .control-group {
@@ -196,20 +201,48 @@ select {
   display: none;
 }
 
+/* 修改保存按钮样式，使其与控制面板一致 */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0 5px;
+}
+
 #saveBtn {
-  background-color: var(--secondary-color);
+  width: 100%;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  font-size: 16px;
+  border-radius: 8px; /* 与其他按钮保持一致 */
+  padding: 12px 15px;
   cursor: pointer;
-  border-radius: 8px;
-  transition: background-color 0.3s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease; /* 与其他按钮保持一致 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#saveBtn::before {
+  content: "💾";
+  margin-right: 8px;
+  font-size: 16px;
 }
 
 #saveBtn:hover {
-  background-color: var(--secondary-hover);
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+#saveBtn:active {
+  transform: translateY(1px);
+}
+
+/* 当按钮处于隐藏状态时 */
+#saveBtn.hidden {
+  display: none;
 }
 
 .slider {
@@ -275,13 +308,18 @@ select {
 
 /* 空状态样式 */
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(245, 245, 245, 0.9);
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  color: #666;
+  width: 80%;
+  max-width: 250px;
+  z-index: 5;
 }
 
 .empty-state p {
@@ -290,4 +328,44 @@ select {
 
 .hidden {
   display: none !important;
+}
+
+/* 添加新的样式组织结构 */
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 改进预览区域样式 */
+.preview-wrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+/* 改进空状态提示样式 */
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(245, 245, 245, 0.9);
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 统一按钮样式 */
+button {
+  font-family: Arial, sans-serif;
+  font-weight: 500;
 }

@@ -17,49 +17,52 @@
         <canvas id="previewCanvas"></canvas>
       </div>
     </div>
-    <div class="control-group">
-      <label for="padding">Padding:</label>
-      <input type="range" id="padding" min="0" max="200" value="40" class="slider" aria-label="Padding">
-      <span id="paddingValue">40px</span>
-    </div>
-
-    <div class="control-group">
-      <label for="bgType">Background:</label>
-      <select id="bgType" aria-label="Background Type">
-        <option value="solid">Solid Color</option>
-        <option value="gradient" selected>Gradient</option>
-      </select>
-    </div>
-
-    <div class="control-group background-controls-wrapper">
-      <div id="solidColorControls" class="control-group hidden">
-        <label for="bgColor">Background Color:</label>
-        <input type="color" id="bgColor" value="#ffffff" aria-label="Background Color">
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="padding">Padding:</label>
+        <input type="range" id="padding" min="0" max="200" value="40" class="slider" aria-label="Padding">
+        <span id="paddingValue">40px</span>
       </div>
 
-      <div id="gradientControls" class="control-group">
-        <div class="gradient-presets">
-          <label class="gradient-option">
-            <input type="radio" name="gradientPreset" value="preset1" checked>
-            <span class="gradient-preview" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4)"></span>
-          </label>
-          <label class="gradient-option">
-            <input type="radio" name="gradientPreset" value="preset2">
-            <span class="gradient-preview" style="background: linear-gradient(45deg, #A8E6CF, #FFD3B6)"></span>
-          </label>
-          <label class="gradient-option">
-            <input type="radio" name="gradientPreset" value="preset3">
-            <span class="gradient-preview" style="background: linear-gradient(45deg, #3494E6, #EC6EAD)"></span>
-          </label>
-          <label class="gradient-option">
-            <input type="radio" name="gradientPreset" value="preset4">
-            <span class="gradient-preview" style="background: linear-gradient(45deg, #DAE2F8, #D6A4A4)"></span>
-          </label>
+      <div class="control-group">
+        <label for="bgType">Background:</label>
+        <select id="bgType" aria-label="Background Type">
+          <option value="solid">Solid Color</option>
+          <option value="gradient" selected>Gradient</option>
+        </select>
+      </div>
+
+      <div class="control-group background-controls-wrapper">
+        <div id="solidColorControls" class="control-group hidden">
+          <label for="bgColor">Background Color:</label>
+          <input type="color" id="bgColor" value="#ffffff" aria-label="Background Color">
+        </div>
+
+        <div id="gradientControls" class="control-group">
+          <div class="gradient-presets">
+            <label class="gradient-option">
+              <input type="radio" name="gradientPreset" value="preset1" checked>
+              <span class="gradient-preview" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4)"></span>
+            </label>
+            <label class="gradient-option">
+              <input type="radio" name="gradientPreset" value="preset2">
+              <span class="gradient-preview" style="background: linear-gradient(45deg, #A8E6CF, #FFD3B6)"></span>
+            </label>
+            <label class="gradient-option">
+              <input type="radio" name="gradientPreset" value="preset3">
+              <span class="gradient-preview" style="background: linear-gradient(45deg, #3494E6, #EC6EAD)"></span>
+            </label>
+            <label class="gradient-option">
+              <input type="radio" name="gradientPreset" value="preset4">
+              <span class="gradient-preview" style="background: linear-gradient(45deg, #DAE2F8, #D6A4A4)"></span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
-
-    <button id="saveBtn" class="hidden" aria-label="Save Image">Save Image</button>
+    <div class="action-buttons">
+      <button id="saveBtn" class="hidden" aria-label="Save Image">Save Image</button>
+    </div>
   </div>
   <div id="empty-state" class="empty-state hidden">
     <p>No screenshot available. Capture a new one!</p>

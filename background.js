@@ -132,6 +132,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       }
 
       console.log("Screenshot captured successfully");
+      console.log("Screenshot data type:", typeof dataUrl);
+      console.log("Screenshot data length:", dataUrl ? dataUrl.length : 0);
+      console.log("Screenshot data starts with:", dataUrl ? dataUrl.substring(0, 50) + "..." : "null");
       sendResponse({dataUrl: dataUrl});
     });
     return true; // 异步响应
@@ -144,7 +147,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 
-  // 处理整个屏幕截图请求
+  // 处理整个屏幕截图请求 - 修复版本
   if (request.action === "captureEntireScreen") {
     // 延迟执行截图，确保popup完全关闭
     setTimeout(() => {
@@ -155,6 +158,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
 
         console.log("Full screenshot captured successfully");
+
+        // 检查截图数据是否有效
+        if (!dataUrl || dataUrl.length < 100) {
+          console.error("Invalid screenshot data received");
+          return;
+        }
 
         // 保存截图数据
         capturedAreaImage = dataUrl;
@@ -173,7 +182,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           });
         }
       });
-    }, 300); // 增加延迟时间，确保popup完全关闭
+    }, 500); // 增加延迟时间，确保popup完全关闭
 
     return true;
   }

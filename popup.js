@@ -130,7 +130,12 @@ function initializePreview() {
 }
 
 function updatePreview() {
-  if (!capturedImage) return;
+  if (!capturedImage) {
+    console.log("No captured image to preview");
+    return;
+  }
+
+  console.log("Updating preview with image:", capturedImage.width, "x", capturedImage.height);
 
   const previewContainer = document.getElementById('previewContainer');
   const canvas = document.getElementById('previewCanvas');
@@ -138,36 +143,49 @@ function updatePreview() {
   const padding = parseInt(document.getElementById('padding').value);
   document.getElementById('paddingValue').textContent = `${padding}px`;
 
-  // Calculate dimensions
-  const containerWidth = previewContainer.clientWidth - 40;
-  const containerHeight = previewContainer.clientHeight - 40;
+  // 确保canvas元素可见
+  canvas.classList.add('has-content');
+
+  // 计算尺寸
+  const containerWidth = previewContainer.clientWidth - 20; // 减少一点边距
+  const containerHeight = previewContainer.clientHeight - 20;
 
   let canvasWidth = capturedImage.width + padding * 2;
   let canvasHeight = capturedImage.height + padding * 2;
 
-  // Calculate scale to fit within container while maintaining aspect ratio
+  // 计算缩放比例，确保图像适合容器
   const scaleX = containerWidth / canvasWidth;
   const scaleY = containerHeight / canvasHeight;
-  const scale = Math.min(scaleX, scaleY, 1); // Don't scale up, only down if needed
+  const scale = Math.min(scaleX, scaleY, 1); // 不放大，只缩小
 
-  // Set canvas dimensions
+  // 设置canvas尺寸
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
 
-  // Draw background
+  // 清除canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // 绘制背景
   drawBackground(ctx, canvas.width, canvas.height);
 
-  // Draw image with rounded corners
-  ctx.save();
-  applyRoundedCorners(ctx, padding, padding, capturedImage.width, capturedImage.height, 12);
-  ctx.clip();
-  ctx.drawImage(capturedImage, padding, padding);
-  ctx.restore();
+  // 绘制图像
+  try {
+    ctx.save();
+    applyRoundedCorners(ctx, padding, padding, capturedImage.width, capturedImage.height, 12);
+    ctx.clip();
+    ctx.drawImage(capturedImage, padding, padding);
+    ctx.restore();
 
-  // Apply scale
-  canvas.style.transform = `scale(${scale})`;
-  canvas.style.transformOrigin = 'center';
-  canvas.classList.add('has-content');
+    console.log("Image drawn successfully");
+  } catch (e) {
+    console.error("Error drawing image:", e);
+  }
+
+  // 应用样式以确保正确显示
+  canvas.style.maxWidth = '100%';
+  canvas.style.maxHeight = '100%';
+  canvas.style.display = 'block';
+  canvas.style.margin = '0 auto';
 }
 
 // Add event listener for padding slider
@@ -177,26 +195,136 @@ document.getElementById('padding').addEventListener('input', function(e) {
   updatePreview();
 });
 
-document.getElementById('captureBtn').addEventListener('click', () => {
-  // Show save button on each click to allow multiple captures
-  document.getElementById('saveBtn').classList.remove('hidden');
+document.addEventListener('DOMContentLoaded', function() {
+  initializePreview();
 
-  chrome.tabs.captureVisibleTab(null, {format: 'png'}, function(dataUrl) {
-    const img = new Image();
-    img.onload = function() {
-      capturedImage = img;
+  // 从背景脚本获取可能存在的区域截图 - 修复版本
+  chrome.runtime.sendMessage({action: "getAreaScreenshot"}, function(response) {
+    if (response && response.imageData) {
+      console.log("Received screenshot in popup, data length:", response.imageData.length);
 
-      // Keep current background type selection
-      const currentBgType = document.getElementById('bgType').value;
-      const isSolid = currentBgType === 'solid';
+      // 创建图像对象
+      const img = new Image();
 
-      // Update controls visibility based on current selection
-      document.getElementById('solidColorControls').classList.toggle('hidden', !isSolid);
-      document.getElementById('gradientControls').classList.toggle('hidden', isSolid);
+      img.onload = function() {
+        console.log("Screenshot loaded successfully, dimensions:", img.width, "x", img.height);
 
-      updatePreview();
-    };
-    img.src = dataUrl;
+        // 确保图像尺寸合理
+        if (img.width < 10 || img.height < 10) {
+          console.error("Screenshot dimensions too small:", img.width, "x", img.height);
+          showEmptyState("Screenshot capture failed. Please try again.");
+          return;
+        }
+
+        capturedImage = img;
+        updatePreview();
+
+        // 显示保存按钮
+        document.getElementById('saveBtn').classList.remove('hidden');
+
+        // 隐藏空状态提示
+        const emptyState = document.getElementById('empty-state');
+        if (emptyState) {
+          emptyState.classList.add('hidden');
+        }
+
+        // 添加预览内容标记
+        const previewCanvas = document.getElementById('previewCanvas');
+        if (previewCanvas) {
+          previewCanvas.classList.add('has-content');
+        }
+      };
+
+      img.onerror = function(e) {
+        console.error("Failed to load screenshot:", e);
+        showEmptyState("Failed to load screenshot. Please try again.");
+      };
+
+      img.src = response.imageData;
+    } else {
+      // 显示空状态提示
+      showEmptyState();
+    }
+  });
+
+  // 获取预览区域
+  const previewContainer = document.getElementById('previewContainer');
+
+  // 确保元素存在
+  if (previewContainer) {
+    // 添加删除按钮
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-button';
+    deleteButton.innerHTML = '🗑️';
+    deleteButton.title = 'Delete screenshot';
+    deleteButton.classList.add('delete-button');
+
+    // 将删除按钮添加到预览容器
+    previewContainer.appendChild(deleteButton);
+
+    // 添加删除按钮的点击事件
+    deleteButton.addEventListener('click', function() {
+      // 发送消息到background脚本，清除保存的截图
+      chrome.runtime.sendMessage({
+        action: "clearScreenshot"
+      }, function() {
+        // 清除预览图像
+        const previewCanvas = document.getElementById('previewCanvas');
+        if (previewCanvas) {
+          const ctx = previewCanvas.getContext('2d');
+          ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          previewCanvas.classList.remove('has-content');
+        }
+
+        // 隐藏保存按钮
+        document.getElementById('saveBtn').classList.add('hidden');
+
+        // 显示空状态提示
+        const emptyState = document.getElementById('empty-state');
+        if (emptyState) {
+          emptyState.classList.remove('hidden');
+        }
+
+        // 重置全局变量
+        capturedImage = null;
+      });
+    });
+  }
+
+  // 获取按钮元素
+  const captureBtn = document.getElementById('captureBtn');
+  const selectAreaBtn = document.getElementById('selectAreaBtn');
+
+  // 截取整个屏幕 - 修复版本
+  captureBtn.addEventListener('click', function() {
+    // 发送消息到background脚本，让它处理截图
+    // 这样即使popup关闭，background也能继续执行
+    chrome.runtime.sendMessage({
+      action: "captureEntireScreen"
+    });
+
+    // 关闭popup
+    window.close();
+  });
+
+  // 选择区域
+  selectAreaBtn.addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      if (tabs.length === 0) return;
+
+      const activeTab = tabs[0];
+
+      // 关闭popup
+      window.close();
+
+      // 注入内容脚本
+      chrome.scripting.executeScript({
+        target: {tabId: activeTab.id},
+        files: ['content-selector.js']
+      }).catch(err => {
+        console.error("Script injection failed:", err);
+      });
+    });
   });
 });
 
@@ -209,7 +337,7 @@ document.getElementById('bgType').addEventListener('change', (e) => {
 
 // Simplify event listener list
 ['padding', 'bgColor'].forEach(id => {
-  document.getElementById(id).addEventListener('change', updatePreview);
+  document.getElementById(id).addEventListener('input', updatePreview);
 });
 
 document.querySelectorAll('input[name="gradientPreset"]').forEach(input => {
@@ -230,3 +358,66 @@ document.getElementById('saveBtn').addEventListener('click', () => {
     });
   });
 });
+
+function rgbToHsl(r, g, b) {
+  r /= 255, g /= 255, b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0; // achromatic
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+
+  return [h * 360, s, l];
+}
+
+function hslToRgb(h, s, l) {
+  h /= 360;
+  let r, g, b;
+
+  if (s === 0) {
+    r = g = b = l; // achromatic
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    };
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+  }
+
+  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+// 辅助函数：显示空状态提示
+function showEmptyState(message) {
+  const emptyState = document.getElementById('empty-state');
+  if (emptyState) {
+    if (message) {
+      emptyState.querySelector('p').textContent = message;
+    } else {
+      emptyState.querySelector('p').textContent = "No screenshot available. Capture a new one!";
+    }
+    emptyState.classList.remove('hidden');
+  }
+
+  // 隐藏保存按钮
+  document.getElementById('saveBtn').classList.add('hidden');
+}

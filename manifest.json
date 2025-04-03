@@ -1,11 +1,16 @@
 {
     "manifest_version": 3,
     "name": "Enhanced Screenshot",
-    "version": "1.0.2",
+    "version": "1.0.7",
     "description": "Enhanced browser screenshot tool",
     "permissions": [
         "activeTab",
-        "downloads"
+        "downloads",
+        "scripting",
+        "notifications"
+    ],
+    "host_permissions": [
+        "<all_urls>"
     ],
     "action": {
         "default_popup": "popup.html",

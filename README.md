@@ -5,8 +5,10 @@ Enhanced Screenshot is a browser extension that allows you to capture and custom
 ## Features
 
 - Capture visible tab screenshot
-- Apply solid color or gradient background
+- Select and capture specific areas of the screen
+- Apply solid color or gradient background with preset options
 - Add padding and rounded corners to the screenshot
+- Delete and recapture screenshots as needed
 - Save the customized screenshot
 
 ## Installation
@@ -27,7 +29,7 @@ Enhanced Screenshot is a browser extension that allows you to capture and custom
 ## Usage
 
 1. Click the extension icon to open the popup.
-2. Click "Capture Screen" to take a screenshot of the current tab.
+2. Click "Capture Screen" to take a screenshot of the current tab, or "Select Area" to capture a specific region.
 3. Customize the screenshot using the available controls.
 4. Click "Save Image" to download the customized screenshot.
 

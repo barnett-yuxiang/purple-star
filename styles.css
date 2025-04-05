@@ -204,24 +204,25 @@ h1 {
 }
 
 .color-option:nth-child(1) {
-  background-image: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  background-image: linear-gradient(120deg, #8293d8 0%, #d45b60 100%);
 }
 
 .color-option:nth-child(2) {
-  background-image: linear-gradient(45deg, #A8E6CF, #FFD3B6);
+  background-image: linear-gradient(120deg, #acd157 0%, #71b07a 100%);
 }
 
 .color-option:nth-child(3) {
-  background-image: linear-gradient(45deg, #3494E6, #EC6EAD);
+  background-image: linear-gradient(120deg, #5ad0a4 0%, #5ca5cc 100%);
 }
 
 .color-option:nth-child(4) {
-  background-image: linear-gradient(45deg, #DAE2F8, #D6A4A4);
+  background-image: linear-gradient(120deg, #e6b475 0%, #b351c5 100%);
 }
 
 /* Section 4: Download Section */
 .download-section {
   text-align: center;
+  margin-bottom: 0px;
 }
 
 .primary-btn {

@@ -1,45 +1,61 @@
-# Enhanced Screenshot
+# Enhanced Screenshot Extension
 
-Enhanced Screenshot is a browser extension that allows you to capture and customize screenshots with various background options and rounded corners.
+A Chrome extension designed to enhance screenshot functionality with beautiful backgrounds and customization options.
 
 ## Features
 
-- Capture visible tab screenshot
-- Select and capture specific areas of the screen
-- Apply solid color or gradient background with preset options
-- Add padding and rounded corners to the screenshot
-- Delete and recapture screenshots as needed
-- Save the customized screenshot
+- **Full Page Screenshots**: Capture the entire webpage content, including scrolling areas.
+- **Customization Options**:
+  - Adjust padding between screenshot and background
+  - Choose from multiple background gradient options
+  - Customize corner radius
+  - Select different aspect ratios (1:1, 4:3, 16:9)
+- **Easy Download**: Simple one-click download of enhanced screenshots
 
 ## Installation
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/enhanced-screenshot.git
-    ```
-2. Navigate to the project directory:
-    ```sh
-    cd enhanced-screenshot
-    ```
-3. Load the extension in your browser:
-    - Open Chrome and go to `chrome://extensions/`
-    - Enable "Developer mode"
-    - Click "Load unpacked" and select the project directory
+### Development Mode
+
+1. Clone this repository or download the source code
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable "Developer mode" in the top right corner
+4. Click "Load unpacked" and select the extension directory
+5. The Enhanced Screenshot extension should now appear in your extensions list
+
+### From Chrome Web Store (Coming Soon)
+
+1. Visit the Chrome Web Store
+2. Search for "Enhanced Screenshot"
+3. Click "Add to Chrome"
 
 ## Usage
 
-1. Click the extension icon to open the popup.
-2. Click "Capture Screen" to take a screenshot of the current tab, or "Select Area" to capture a specific region.
-3. Customize the screenshot using the available controls.
-4. Click "Save Image" to download the customized screenshot.
+1. Click the extension icon in your browser toolbar to open the popup
+2. Select a screenshot mode:
+   - **Full Page**: Captures the entire webpage
+   - **Select Area**: (Coming soon) Manually select an area to capture
+   - **SmartCapture**: (Coming soon) Automatically identify and capture UI elements
+3. Customize your screenshot with the available options
+4. Click "Download Screenshot" to save the enhanced image
 
-## Build
+## Project Structure
 
-To create a ZIP file of the extension for distribution, use the provided GitHub Actions workflow:
+- `popup.html` - The main extension popup UI
+- `popup.js` - JavaScript for the popup functionality
+- `styles.css` - Styling for the popup UI
+- `background.js` - Background script for extension functionality
+- `content-script.js` - Content script for interacting with web pages
+- `manifest.json` - Extension configuration file
 
-1. Trigger the workflow manually from the GitHub Actions tab.
-2. The ZIP file will be available as an artifact in the workflow run.
+## Development
+
+### Future Enhancements
+
+- Implement Select Area functionality for manual region selection
+- Implement SmartCapture for intelligent UI element detection
+- Add more background style options
+- Add text overlay capabilities
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License

@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Enhanced Screenshot",
     "version": "1.0.8",
-    "description": "Enhance the screenshot experience for browser users by offering multiple screenshot modes",
+    "description": "A browser extension designed to enhance screenshot functionality with beautiful backgrounds and customization options.",
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -21,14 +21,21 @@
     },
     "permissions": [
         "activeTab",
+        "storage",
         "downloads",
-        "scripting",
-        "notifications"
+        "notifications",
+        "scripting"
     ],
     "host_permissions": [
         "<all_urls>"
     ],
     "background": {
         "service_worker": "background.js"
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content-script.js"]
+        }
+    ]
 }

@@ -1,26 +1,70 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Enhanced Screenshot</title>
-    <style>
-      body {
-        width: 400px;
-        padding: 15px;
-        font-family: Arial, sans-serif;
-        box-sizing: border-box;
-      }
-      button {
-        background-color: #4285f4;
-        color: white;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>Enhanced Screenshot</h2>
-    <button id="id1">Full Page</button>
-    <button id="id2">Current Tab</button>
-    <button id="id3">Selected Area</button>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Screenshot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Section 1: Screenshot Mode Selection -->
+    <div class="section screenshot-modes">
+      <button id="fullPageBtn" class="mode-btn">Full Page</button>
+      <button id="selectAreaBtn" class="mode-btn disabled">Select Area</button>
+      <button id="smartCaptureBtn" class="mode-btn disabled">Smart Capture</button>
+    </div>
 
-    <script src="popup.js"></script>
-  </body>
+    <!-- Section 2: Preview Section -->
+    <div class="section preview-section">
+      <div class="preview-container" id="previewContainer">
+        <div class="aspect-container" id="aspectContainer"></div>
+        <div class="hint-text">Capture Image</div>
+        <div class="preview-content" id="previewContent"></div>
+      </div>
+      <div class="preview-actions">
+        <div class="aspect-ratio-selector">
+          <select id="aspectRatio">
+            <option value="1:1">1:1</option>
+            <option value="4:3">4:3</option>
+            <option value="16:9" selected>16:9</option>
+          </select>
+        </div>
+        <button id="clearBtn" class="action-btn" disabled>Clear</button>
+      </div>
+    </div>
+
+    <!-- Section 3: Editing Section -->
+    <div class="section editing-section">
+      <div class="edit-control">
+        <label for="paddingSlider">Padding</label>
+        <input type="range" id="paddingSlider" min="0" max="100" value="45">
+        <span id="paddingValue">45px</span>
+      </div>
+
+      <div class="edit-control">
+        <label>Background</label>
+        <div class="color-options">
+          <div class="color-option" data-gradient="linear-gradient(45deg, #FF6B6B, #4ECDC4)"></div>
+          <div class="color-option" data-gradient="linear-gradient(45deg, #A8E6CF, #FFD3B6)"></div>
+          <div class="color-option" data-gradient="linear-gradient(45deg, #3494E6, #EC6EAD)"></div>
+          <div class="color-option" data-gradient="linear-gradient(45deg, #DAE2F8, #D6A4A4)"></div>
+        </div>
+      </div>
+
+      <div class="edit-control">
+        <label for="radiusSlider">Corner Radius</label>
+        <input type="range" id="radiusSlider" min="0" max="30" value="5" disabled>
+        <span id="radiusValue">5px</span>
+      </div>
+    </div>
+
+    <!-- Section 4: Download Section -->
+    <div class="section download-section">
+      <button id="downloadBtn" class="primary-btn" disabled>Download Screenshot</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
 </html>

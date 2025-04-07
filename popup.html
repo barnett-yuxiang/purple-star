@@ -1,72 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enhanced Screenshot</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Screenshot</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
-    <div class="capture-buttons">
-      <button id="captureBtn" aria-label="Capture Screen">Capture Screen</button>
-      <button id="selectAreaBtn" aria-label="Select Area">Select Area</button>
-    </div>
-    <div class="preview-wrapper">
-      <div id="previewContainer">
-        <canvas id="previewCanvas"></canvas>
-      </div>
-    </div>
-    <div class="controls-panel">
-      <div class="control-group">
-        <label for="padding">Padding:</label>
-        <input type="range" id="padding" min="0" max="200" value="40" class="slider" aria-label="Padding">
-        <span id="paddingValue">40px</span>
-      </div>
-
-      <div class="control-group">
-        <label for="bgType">Background:</label>
-        <select id="bgType" aria-label="Background Type">
-          <option value="solid">Solid Color</option>
-          <option value="gradient" selected>Gradient</option>
-        </select>
-      </div>
-
-      <div class="control-group background-controls-wrapper">
-        <div id="solidColorControls" class="control-group hidden">
-          <label for="bgColor">Background Color:</label>
-          <input type="color" id="bgColor" value="#ffffff" aria-label="Background Color">
+    <div class="container">
+        <!-- Screenshot Mode Selection -->
+        <div class="mode-selection">
+            <button id="visiblePage" class="mode-btn active">Visible Page</button>
+            <button id="selectArea" class="mode-btn" disabled>Select Area</button>
+            <button id="smartCapture" class="mode-btn" disabled>Smart Capture</button>
         </div>
 
-        <div id="gradientControls" class="control-group">
-          <div class="gradient-presets">
-            <label class="gradient-option">
-              <input type="radio" name="gradientPreset" value="preset1" checked>
-              <span class="gradient-preview" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4)"></span>
-            </label>
-            <label class="gradient-option">
-              <input type="radio" name="gradientPreset" value="preset2">
-              <span class="gradient-preview" style="background: linear-gradient(45deg, #A8E6CF, #FFD3B6)"></span>
-            </label>
-            <label class="gradient-option">
-              <input type="radio" name="gradientPreset" value="preset3">
-              <span class="gradient-preview" style="background: linear-gradient(45deg, #3494E6, #EC6EAD)"></span>
-            </label>
-            <label class="gradient-option">
-              <input type="radio" name="gradientPreset" value="preset4">
-              <span class="gradient-preview" style="background: linear-gradient(45deg, #DAE2F8, #D6A4A4)"></span>
-            </label>
-          </div>
+        <!-- Preview Area -->
+        <div class="preview-area">
+            <div id="preview-container">
+                <div id="placeholder">Capture Image</div>
+                <img id="screenshot-preview" style="display: none;">
+            </div>
+            <button id="clear-btn" disabled>Clear</button>
         </div>
-      </div>
+
+        <!-- Editing Area -->
+        <div class="editing-area">
+            <div class="edit-control">
+                <label for="padding-range">Padding</label>
+                <div class="range-container">
+                    <input type="range" id="padding-range" min="0" max="100" value="20" disabled>
+                    <span id="padding-value" class="range-value">20px</span>
+                </div>
+            </div>
+
+            <div class="edit-control">
+                <label>Background Color</label>
+                <div class="bg-color-options">
+                    <div class="bg-color-option gradient-1 active" data-gradient="gradient-1"></div>
+                    <div class="bg-color-option gradient-2" data-gradient="gradient-2"></div>
+                    <div class="bg-color-option gradient-3" data-gradient="gradient-3"></div>
+                    <div class="bg-color-option gradient-4" data-gradient="gradient-4"></div>
+                </div>
+            </div>
+
+            <div class="edit-control">
+                <label for="radius-range">Corner Radius</label>
+                <div class="range-container">
+                    <input type="range" id="radius-range" min="0" max="30" value="5" disabled>
+                    <span id="radius-value" class="range-value">5px</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Area -->
+        <div class="download-area">
+            <button id="download-btn" disabled>Download</button>
+        </div>
     </div>
-    <div class="action-buttons">
-      <button id="saveBtn" class="hidden" aria-label="Save Image">Save Image</button>
-    </div>
-  </div>
-  <div id="empty-state" class="empty-state hidden">
-    <p>No screenshot available. Capture a new one!</p>
-  </div>
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>

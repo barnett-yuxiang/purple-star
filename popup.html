@@ -28,8 +28,10 @@
         <div class="editing-area">
             <div class="edit-control">
                 <label for="padding-range">Padding</label>
-                <input type="range" id="padding-range" min="0" max="100" value="20" disabled>
-                <span id="padding-value">20px</span>
+                <div class="range-container">
+                    <input type="range" id="padding-range" min="0" max="100" value="20" disabled>
+                    <span id="padding-value" class="range-value">20px</span>
+                </div>
             </div>
 
             <div class="edit-control">
@@ -44,8 +46,10 @@
 
             <div class="edit-control">
                 <label for="radius-range">Corner Radius</label>
-                <input type="range" id="radius-range" min="0" max="30" value="5" disabled>
-                <span id="radius-value">5px</span>
+                <div class="range-container">
+                    <input type="range" id="radius-range" min="0" max="30" value="5" disabled>
+                    <span id="radius-value" class="range-value">5px</span>
+                </div>
             </div>
         </div>
 

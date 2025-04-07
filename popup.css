@@ -16,7 +16,7 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 /* Screenshot Mode Selection */
@@ -215,6 +215,7 @@ input[type="range"][disabled] {
 .download-area {
     display: flex;
     justify-content: center;
+    margin-top: 4px;
     margin-bottom: 0px;
 }
 
@@ -243,4 +244,26 @@ input[type="range"][disabled] {
 #download-btn[disabled] {
     background-color: #a5a5a5;
     cursor: not-allowed;
+}
+
+/* Add these styles */
+.range-container {
+    position: relative;
+    width: 100%;
+}
+
+.range-value {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; /* Fixed width to prevent layout shifts */
+    text-align: right;
+    font-size: 14px;
+    color: #495057;
+}
+
+/* Adjust the range input width to make room for the value display */
+.range-container input[type="range"] {
+    width: calc(100% - 50px);
 }

@@ -1,70 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enhanced Screenshot</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Screenshot</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Section 1: Screenshot Mode Selection -->
-    <div class="section screenshot-modes">
-      <button id="fullPageBtn" class="mode-btn">Full Page</button>
-      <button id="selectAreaBtn" class="mode-btn disabled">Select Area</button>
-      <button id="smartCaptureBtn" class="mode-btn disabled">Smart Capture</button>
-    </div>
-
-    <!-- Section 2: Preview Section -->
-    <div class="section preview-section">
-      <div class="preview-container" id="previewContainer">
-        <div class="aspect-container" id="aspectContainer"></div>
-        <div class="hint-text">Capture Image</div>
-        <div class="preview-content" id="previewContent"></div>
-      </div>
-      <div class="preview-actions">
-        <div class="aspect-ratio-selector">
-          <select id="aspectRatio">
-            <option value="1:1">1:1</option>
-            <option value="4:3">4:3</option>
-            <option value="16:9" selected>16:9</option>
-          </select>
+    <div class="container">
+        <!-- Screenshot Mode Selection -->
+        <div class="mode-selection">
+            <button id="visiblePage" class="mode-btn active">Visible Page</button>
+            <button id="selectArea" class="mode-btn" disabled>Select Area</button>
+            <button id="smartCapture" class="mode-btn" disabled>Smart Capture</button>
         </div>
-        <button id="clearBtn" class="action-btn" disabled>Clear</button>
-      </div>
-    </div>
 
-    <!-- Section 3: Editing Section -->
-    <div class="section editing-section">
-      <div class="edit-control">
-        <label for="paddingSlider">Padding</label>
-        <input type="range" id="paddingSlider" min="0" max="100" value="9">
-        <span id="paddingValue">9px</span>
-      </div>
-
-      <div class="edit-control">
-        <label>Background</label>
-        <div class="color-options">
-          <div class="color-option" data-gradient="linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)"></div>
-          <div class="color-option" data-gradient="linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)"></div>
-          <div class="color-option" data-gradient="linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)"></div>
-          <div class="color-option" data-gradient="linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)"></div>
+        <!-- Preview Area -->
+        <div class="preview-area">
+            <div id="preview-container">
+                <div id="placeholder">Capture Image</div>
+                <img id="screenshot-preview" style="display: none;">
+            </div>
+            <button id="clear-btn" disabled>Clear</button>
         </div>
-      </div>
 
-      <div class="edit-control">
-        <label for="radiusSlider">Corner Radius</label>
-        <input type="range" id="radiusSlider" min="0" max="30" value="5" disabled>
-        <span id="radiusValue">5px</span>
-      </div>
+        <!-- Editing Area -->
+        <div class="editing-area">
+            <div class="edit-control">
+                <label for="padding-range">Padding</label>
+                <input type="range" id="padding-range" min="0" max="100" value="20" disabled>
+                <span id="padding-value">20px</span>
+            </div>
+
+            <div class="edit-control">
+                <label>Background Color</label>
+                <div class="bg-color-options">
+                    <div class="bg-color-option gradient-1 active" data-gradient="gradient-1"></div>
+                    <div class="bg-color-option gradient-2" data-gradient="gradient-2"></div>
+                    <div class="bg-color-option gradient-3" data-gradient="gradient-3"></div>
+                    <div class="bg-color-option gradient-4" data-gradient="gradient-4"></div>
+                </div>
+            </div>
+
+            <div class="edit-control">
+                <label for="radius-range">Corner Radius</label>
+                <input type="range" id="radius-range" min="0" max="30" value="5" disabled>
+                <span id="radius-value">5px</span>
+            </div>
+        </div>
+
+        <!-- Download Area -->
+        <div class="download-area">
+            <button id="download-btn" disabled>Download</button>
+        </div>
     </div>
-
-    <!-- Section 4: Download Section -->
-    <div class="section download-section">
-      <button id="downloadBtn" class="primary-btn" disabled>Download</button>
-    </div>
-  </div>
-
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>

@@ -226,7 +226,8 @@ h1 {
 }
 
 .primary-btn {
-  padding: 12px 24px;
+  width: 120px;
+  padding: 12px 10px;
   background-color: #5c6bc0;
   color: white;
   border: none;
@@ -235,6 +236,9 @@ h1 {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .primary-btn:hover {

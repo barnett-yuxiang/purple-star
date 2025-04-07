@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, (downloadId) => {
           // Reset download button
           downloadBtn.disabled = false;
-          downloadBtn.textContent = 'Download Screenshot';
+          downloadBtn.textContent = 'Download';
 
           if (chrome.runtime.lastError) {
             console.error('Download error:', chrome.runtime.lastError);
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Reset download button
         downloadBtn.disabled = false;
-        downloadBtn.textContent = 'Download Screenshot';
+        downloadBtn.textContent = 'Download';
 
         // Notify background script of the error
         chrome.runtime.sendMessage({ action: 'downloadError' });
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Reset download button
       downloadBtn.disabled = false;
-      downloadBtn.textContent = 'Download Screenshot';
+      downloadBtn.textContent = 'Download';
 
       // Notify background script of the error
       chrome.runtime.sendMessage({ action: 'downloadError' });

@@ -36,7 +36,7 @@ A Chrome extension designed to enhance screenshot functionality with beautiful b
    - **Select Area**: (Coming soon) Manually select an area to capture
    - **SmartCapture**: (Coming soon) Automatically identify and capture UI elements
 3. Customize your screenshot with the available options
-4. Click "Download Screenshot" to save the enhanced image
+4. Click "Download" to save the enhanced image
 
 ## Project Structure
 

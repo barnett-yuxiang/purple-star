@@ -16,7 +16,7 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 /* Screenshot Mode Selection */
@@ -36,6 +36,13 @@ body {
     transition: all 0.2s ease;
     font-size: 14px;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
 }
 
 .mode-btn:not([disabled]):hover {
@@ -58,7 +65,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
+    width: 100%;
 }
 
 #preview-container {
@@ -71,6 +79,23 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
+    background-color: white;
+}
+
+#preview-container.gradient-1 {
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+}
+
+#preview-container.gradient-2 {
+    background: linear-gradient(45deg, #A8E6CF, #FFD3B6);
+}
+
+#preview-container.gradient-3 {
+    background: linear-gradient(45deg, #3494E6, #EC6EAD);
+}
+
+#preview-container.gradient-4 {
+    background: linear-gradient(45deg, #DAE2F8, #D6A4A4);
 }
 
 #placeholder {
@@ -79,9 +104,11 @@ body {
 }
 
 #screenshot-preview {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: calc(100% - 40px);
+    max-height: calc(100% - 40px);
     object-fit: contain;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 #clear-btn {
@@ -145,12 +172,14 @@ input[type="range"][disabled] {
 
 .bg-color-options {
     display: flex;
-    gap: 12px;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
 }
 
 .bg-color-option {
-    width: 48px;
-    height: 48px;
+    flex: 1;
+    height: 36px;
     border-radius: 6px;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -158,7 +187,7 @@ input[type="range"][disabled] {
 }
 
 .bg-color-option:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .bg-color-option.active {
@@ -167,38 +196,44 @@ input[type="range"][disabled] {
 }
 
 .gradient-1 {
-    background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
 }
 
 .gradient-2 {
-    background: linear-gradient(135deg, #fd79a8, #e84393);
+    background: linear-gradient(45deg, #A8E6CF, #FFD3B6);
 }
 
 .gradient-3 {
-    background: linear-gradient(135deg, #55efc4, #00b894);
+    background: linear-gradient(45deg, #3494E6, #EC6EAD);
 }
 
 .gradient-4 {
-    background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+    background: linear-gradient(45deg, #DAE2F8, #D6A4A4);
 }
 
 /* Download Area */
 .download-area {
     display: flex;
     justify-content: center;
+    margin-bottom: 0px;
 }
 
 #download-btn {
-    width: 100%;
-    padding: 12px;
+    width: auto;
+    min-width: 120px;
+    padding: 10px 30px;
     border: none;
     border-radius: 6px;
     background-color: #6c5ce7;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #download-btn:not([disabled]):hover {

@@ -108,6 +108,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset state
     currentScreenshot = null;
 
+    // Reset background color to the first option
+    bgColorOptions.forEach(opt => opt.classList.remove('active'));
+    bgColorOptions[0].classList.add('active');
+    currentBackgroundClass = 'gradient-1';
+
+    // Remove gradient class from preview container
+    previewContainer.classList.remove('gradient-1', 'gradient-2', 'gradient-3', 'gradient-4');
+
     // Disable editing controls
     disableEditingControls();
   }
@@ -154,28 +162,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function getGradient(ctx, width, height, gradientClass) {
-    const gradient = ctx.createLinearGradient(0, height, width, 0);
+    // Create gradient at 45 degrees
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
 
     switch (gradientClass) {
       case 'gradient-1':
-        gradient.addColorStop(0, '#a29bfe');
-        gradient.addColorStop(1, '#6c5ce7');
+        gradient.addColorStop(0, '#FF6B6B');
+        gradient.addColorStop(1, '#4ECDC4');
         break;
       case 'gradient-2':
-        gradient.addColorStop(0, '#fd79a8');
-        gradient.addColorStop(1, '#e84393');
+        gradient.addColorStop(0, '#A8E6CF');
+        gradient.addColorStop(1, '#FFD3B6');
         break;
       case 'gradient-3':
-        gradient.addColorStop(0, '#55efc4');
-        gradient.addColorStop(1, '#00b894');
+        gradient.addColorStop(0, '#3494E6');
+        gradient.addColorStop(1, '#EC6EAD');
         break;
       case 'gradient-4':
-        gradient.addColorStop(0, '#ffeaa7');
-        gradient.addColorStop(1, '#fdcb6e');
+        gradient.addColorStop(0, '#DAE2F8');
+        gradient.addColorStop(1, '#D6A4A4');
         break;
       default:
-        gradient.addColorStop(0, '#a29bfe');
-        gradient.addColorStop(1, '#6c5ce7');
+        gradient.addColorStop(0, '#FF6B6B');
+        gradient.addColorStop(1, '#4ECDC4');
     }
 
     return gradient;

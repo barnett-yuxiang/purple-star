@@ -23,18 +23,18 @@ body {
 .mode-selection {
     display: flex;
     justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
 }
 
 .mode-btn {
     flex: 1;
-    padding: 10px;
+    padding: 8px 4px;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     background-color: white;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -42,7 +42,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    height: 36px;
 }
 
 .mode-btn:not([disabled]):hover {

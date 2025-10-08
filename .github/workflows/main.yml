@@ -1,25 +1,29 @@
-name: Build Enhanced Screenshot ZIP
+name: Build Enhanced Screenshot
 
-# Manual trigger
 on:
   workflow_dispatch:
 
 jobs:
-  build-zip:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Create ZIP file using Makefile
-      - name: Build extension package
-        run: make build
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      # Save ZIP file to Actions Artifact (for direct download)
-      - name: Upload ZIP as artifact
+      - name: Check JavaScript syntax
+        run: make check
+
+      - name: Package extension
+        run: make package
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: enhanced-screenshot
-          path: enhanced-screenshot.zip
+          path: dist/*.zip

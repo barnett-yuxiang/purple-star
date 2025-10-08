@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // DOM Elements
-  const visiblePageBtn = document.getElementById('visiblePage');
+  const visibleAreaBtn = document.getElementById('visibleArea');
+  const fullScrollBtn = document.getElementById('fullScroll');
   const selectAreaBtn = document.getElementById('selectArea');
   const smartCaptureBtn = document.getElementById('smartCapture');
   const previewContainer = document.getElementById('preview-container');
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentBackgroundClass = 'gradient-1';
 
   // Event Listeners
-  visiblePageBtn.addEventListener('click', captureVisibleTab);
+  visibleAreaBtn.addEventListener('click', captureVisibleTab);
   clearBtn.addEventListener('click', clearScreenshot);
   downloadBtn.addEventListener('click', downloadScreenshot);
 

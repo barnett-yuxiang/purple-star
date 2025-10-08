@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Enhanced Screenshot",
-    "version": "1.0.8",
+    "version": "1.1.8",
     "description": "A browser extension designed to enhance screenshot functionality with beautiful backgrounds and customization options.",
     "action": {
         "default_popup": "popup.html",
